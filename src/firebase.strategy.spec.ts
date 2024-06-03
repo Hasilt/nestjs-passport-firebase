@@ -1,11 +1,12 @@
 import { FirebaseStrategy } from './firebase.strategy';
 import { DecodedIdToken } from './decoded-id-token';
+import { ExtractJwt } from 'passport-jwt';
 
 describe('Firebase Strategy', () => {
   let strategy: FirebaseStrategy;
 
   beforeEach(() => {
-    strategy = new FirebaseStrategy({ issuer: 'issuer', audience: 'audience' });
+    strategy = new FirebaseStrategy({ issuer: 'issuer', audience: 'audience' }, [ExtractJwt.fromAuthHeaderAsBearerToken()]);
   });
 
   it('should be defined', () => {

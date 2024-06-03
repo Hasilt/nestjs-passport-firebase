@@ -3,6 +3,7 @@ import * as passport from 'passport';
 import { FirebaseAuthGuard } from './firebase-auth.guard';
 import { FirebaseStrategy } from './firebase.strategy';
 import Mocked = jest.Mocked;
+import { ExtractJwt } from 'passport-jwt';
 
 describe('Firebase Auth Guard Middleware', () => {
   let firebaseAuthGuard: FirebaseAuthGuard;
@@ -15,7 +16,7 @@ describe('Firebase Auth Guard Middleware', () => {
 
     mockPassport.use(
       'firebase',
-      new FirebaseStrategy({ issuer: 'issuer', audience: 'audience' }),
+      new FirebaseStrategy({ issuer: 'issuer', audience: 'audience' }, [ExtractJwt.fromAuthHeaderAsBearerToken()]),
     );
 
     context = ({
