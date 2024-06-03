@@ -3,13 +3,14 @@ import { ExtractJwt, Strategy } from 'passport-jwt';
 import { PassportStrategy } from '@nestjs/passport';
 import { DecodedIdToken } from './decoded-id-token';
 import { Inject, Injectable } from '@nestjs/common';
-import { FIREBASE_AUTH_CONFIG } from './constants';
+import { FIREBASE_AUTH_CONFIG, JWT_FROM_REQUEST } from './constants';
 import { FirebaseAuthConfig } from './firebase-auth.config';
 
 @Injectable()
 export class FirebaseStrategy extends PassportStrategy(Strategy, 'firebase') {
   constructor(
     @Inject(FIREBASE_AUTH_CONFIG) { issuer, audience }: FirebaseAuthConfig,
+    @Inject(JWT_FROM_REQUEST) jwtFromRequest: any
   ) {
     super({
       secretOrKeyProvider: passportJwtSecret({
@@ -21,7 +22,7 @@ export class FirebaseStrategy extends PassportStrategy(Strategy, 'firebase') {
       }),
       issuer,
       audience,
-      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+      jwtFromRequest,
       algorithms: ['RS256'],
     });
   }
@@ -29,4 +30,5 @@ export class FirebaseStrategy extends PassportStrategy(Strategy, 'firebase') {
   validate(payload: DecodedIdToken): any | Promise<any> {
     return payload;
   }
+
 }
