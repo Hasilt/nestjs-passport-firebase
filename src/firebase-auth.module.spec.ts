@@ -2,7 +2,7 @@ import { PassportModule } from '@nestjs/passport';
 import { Test, TestingModule, TestingModuleBuilder } from '@nestjs/testing';
 import { FIREBASE_AUTH_CONFIG } from './constants';
 import { FirebaseAuthModule } from './firebase-auth.module';
-import { FirebaseStrategy } from './firebase.strategy';
+import { FirebaseStrategy } from './strategies/firebase-token.strategy';
 
 describe('Firebase Auth Module', () => {
   let module: TestingModule;
