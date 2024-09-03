@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.0.7] - 2023-09-03
+
+### Added
+- Support for cookie-based authentication alongside existing JWT authentication.
+- Ability to customize the cookie name used for authentication.
+
+### Changed
+- Updated `FirebaseStrategy` to handle both JWT and cookie-based authentication.
+- Modified `FirebaseAuthConfig` to include an optional `cookieName` property.
+
 ## [1.0.6] - 2023-06-25
 - Update peer deps `@nestjs/passport` to support version `^10.0.0`
 - Add `.nvmrc` to force use node v18 to contributors

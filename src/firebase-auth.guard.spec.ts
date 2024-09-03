@@ -1,7 +1,7 @@
 import { ExecutionContext, UnauthorizedException } from '@nestjs/common';
 import * as passport from 'passport';
 import { FirebaseAuthGuard } from './firebase-auth.guard';
-import { FirebaseStrategy } from './firebase.strategy';
+import { FirebaseStrategy } from './strategies/firebase-token.strategy';
 import Mocked = jest.Mocked;
 import { ExtractJwt } from 'passport-jwt';
 
