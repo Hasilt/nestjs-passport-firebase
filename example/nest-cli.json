@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "assets": [
+      "**/*.hbs"
+    ],
+    "watchAssets": true
+  },
+  "generators": {
+    "service": {
+      "path": "src"
+    },
+    "controller": {
+      "path": "src"
+    },
+    "module": {
+      "path": "src"
+    }
+  }
+}
