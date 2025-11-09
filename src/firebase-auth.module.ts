@@ -1,10 +1,10 @@
 import { DynamicModule, Global, Module, Provider } from '@nestjs/common';
 import { PassportModule } from '@nestjs/passport';
-import { FirebaseStrategy } from './strategies/firebase-token.strategy';
+import { FirebaseStrategy } from './strategies/token/firebase-token.strategy';
 import { FirebaseAuthConfig } from './firebase-auth.config';
 import { FIREBASE_AUTH_CONFIG, JWT_FROM_REQUEST } from './constants';
 import { ExtractJwt } from 'passport-jwt';
-import { FirebaseCookieStrategy } from './strategies/firebase-cookie.strategy';
+import { FirebaseCookieStrategy } from './strategies/cookie/firebase-cookie.strategy';
 
 @Global()
 @Module({})
@@ -35,7 +35,7 @@ export class FirebaseAuthModule {
   static registerAsync(options: {
     useFactory: (...args: any[]) => Promise<FirebaseAuthConfig> | FirebaseAuthConfig;
     inject?: any[];
-    imports?: DynamicModule['imports']; 
+    imports?: DynamicModule['imports'];
   }): DynamicModule {
     return {
       module: FirebaseAuthModule,
