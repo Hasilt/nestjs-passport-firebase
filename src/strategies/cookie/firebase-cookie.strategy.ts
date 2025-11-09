@@ -1,8 +1,8 @@
 import { Strategy } from 'passport-custom';
 import { PassportStrategy } from '@nestjs/passport';
 import { Injectable, Inject, UnauthorizedException } from '@nestjs/common';
-import { FIREBASE_AUTH_CONFIG } from './constants';
-import { FirebaseAuthConfig } from './firebase-auth.config';
+import { FIREBASE_AUTH_CONFIG } from '../../constants';
+import { FirebaseAuthConfig } from '../../firebase-auth.config';
 import * as admin from 'firebase-admin';
 
 @Injectable()
@@ -17,10 +17,10 @@ export class FirebaseCookieStrategy extends PassportStrategy(Strategy, 'firebase
     }
 
     private initializeFirebaseAdmin() {
-      
+
         if (!admin.apps.length) {
             this.firebaseAdmin = admin.initializeApp({
-                credential: admin.credential.cert(this.config.serviceAccountPath as string),
+                credential: admin.credential.cert(this.config.serviceAccountPath),
             });
         } else {
             this.firebaseAdmin = admin.app();
@@ -33,6 +33,7 @@ export class FirebaseCookieStrategy extends PassportStrategy(Strategy, 'firebase
         if (!sessionCookie) {
             throw new UnauthorizedException('No session cookie found');
         }
+
         try {
             const decodedClaims = await admin.auth().verifySessionCookie(
                 sessionCookie,

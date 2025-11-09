@@ -1,10 +1,10 @@
 import { passportJwtSecret } from 'jwks-rsa';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { PassportStrategy } from '@nestjs/passport';
-import { DecodedIdToken } from '../decoded-id-token';
+import { DecodedIdToken } from '../../decoded-id-token';
 import { Inject, Injectable, Logger } from '@nestjs/common';
-import { FIREBASE_AUTH_CONFIG, JWT_FROM_REQUEST } from '../constants';
-import { FirebaseAuthConfig } from '../firebase-auth.config';
+import { FIREBASE_AUTH_CONFIG, JWT_FROM_REQUEST } from '../../constants';
+import { FirebaseAuthConfig } from '../../firebase-auth.config';
 
 @Injectable()
 export class FirebaseStrategy extends PassportStrategy(Strategy, 'firebase-token') {
