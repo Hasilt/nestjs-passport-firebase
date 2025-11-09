@@ -1,6 +1,6 @@
 {
   "name": "@ideashift/nestjs-passport-firebase",
-  "version": "1.0.10+3",
+  "version": "1.0.11",
   "description": "Passport - Firebase Auth Module for NestJS",
   "author": "IdeaShift IN",
   "license": "MIT",
