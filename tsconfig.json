@@ -9,8 +9,8 @@
     "sourceMap": true,
     "outDir": "./dist",
     "rootDir": "./src",
-    "baseUrl": "./",
-    "noLib": false
+    "noLib": false,
+    "types": ["node", "jest"]
   },
   "include": [
     "src/**/*.ts"

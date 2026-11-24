@@ -7,7 +7,7 @@ import * as admin from 'firebase-admin';
 
 @Injectable()
 export class FirebaseCookieStrategy extends PassportStrategy(Strategy, 'firebase-cookie') {
-    private firebaseAdmin: admin.app.App;
+    private firebaseAdmin!: admin.app.App;
 
     constructor(
         @Inject(FIREBASE_AUTH_CONFIG) private config: FirebaseAuthConfig
@@ -17,8 +17,10 @@ export class FirebaseCookieStrategy extends PassportStrategy(Strategy, 'firebase
     }
 
     private initializeFirebaseAdmin() {
-
         if (!admin.apps.length) {
+            if (!this.config.serviceAccountPath) {
+                throw new Error('FirebaseAuthConfig.serviceAccountPath is required for cookie auth');
+            }
             this.firebaseAdmin = admin.initializeApp({
                 credential: admin.credential.cert(this.config.serviceAccountPath),
             });
@@ -41,7 +43,8 @@ export class FirebaseCookieStrategy extends PassportStrategy(Strategy, 'firebase
             );
             return decodedClaims;
         } catch (error) {
-            throw new UnauthorizedException(error.message || 'Invalid session cookie');
+            const message = error instanceof Error ? error.message : 'Invalid session cookie';
+            throw new UnauthorizedException(message || 'Invalid session cookie');
         }
     }
 }

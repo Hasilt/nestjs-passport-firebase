@@ -16,6 +16,16 @@
   </a>
 </p>
 
+## Compatibility
+
+| NestJS | `@nestjs/passport` | Node.js |
+|--------|--------------------|---------|
+| 8–10   | 9–11               | per Nest docs |
+| 11     | 11 or 12           | 20+ (20.19+ / 22.12+ if using `@nestjs/passport@12`) |
+| 12     | 12                 | **20.19+** or **22.12+** |
+
+Nest 8–10 apps should keep `@nestjs/passport@9–11`. Nest 12 requires `@nestjs/passport@12` (ESM; needs a Node version with `require(esm)`).
+
 ## Installation
 
 Install the following peer dependencies:

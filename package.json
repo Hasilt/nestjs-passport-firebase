@@ -1,6 +1,6 @@
 {
   "name": "@ideashift/nestjs-passport-firebase",
-  "version": "1.0.16",
+  "version": "1.0.17",
   "description": "Passport - Firebase Auth Module for NestJS",
   "author": "IdeaShift IN",
   "license": "MIT",
@@ -11,14 +11,14 @@
   ],
   "scripts": {
     "start:dev": "tsc -w",
-    "build": "tsc",
+    "build": "tsc -p tsconfig.build.json",
     "prepare": "npm run build",
     "format": "prettier --write \"src/**/*.ts\"",
     "lint": "tslint -p tsconfig.json -c tslint.json",
-    "test": "jest",
-    "test:watch": "jest --watch",
-    "test:cov": "jest --coverage",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test": "NODE_OPTIONS=--experimental-vm-modules jest",
+    "test:watch": "NODE_OPTIONS=--experimental-vm-modules jest --watch",
+    "test:cov": "NODE_OPTIONS=--experimental-vm-modules jest --coverage",
+    "test:e2e": "NODE_OPTIONS=--experimental-vm-modules jest --config ./test/jest-e2e.json"
   },
   "keywords": [
     "nestjs",
@@ -33,9 +33,12 @@
     "type": "git",
     "url": "git+https://github.com/hasilt/nestjs-passport-firebase.git"
   },
+  "engines": {
+    "node": ">=18"
+  },
   "peerDependencies": {
-    "@nestjs/common": "^8.0.0 || ^9.0.0 || ^10.x || ^11.x",
-    "@nestjs/passport": "^9.0.0 || ^10.x || ^11.x",
+    "@nestjs/common": "^8.0.0 || ^9.0.0 || ^10.x || ^11.x || ^12.x",
+    "@nestjs/passport": "^9.0.0 || ^10.x || ^11.x || ^12.x",
     "jwks-rsa": "^2.0.5 || ^3.x",
     "passport": "^0.6.0 || ^0.7.x",
     "passport-jwt": "^4.x",
@@ -46,20 +49,20 @@
     "passport-cookie": "^1.0.9"
   },
   "devDependencies": {
-    "@nestjs/cli": "^11.0.14",
-    "@nestjs/common": "^11.1.10",
-    "@nestjs/core": "^11.1.10",
-    "@nestjs/passport": "^11.0.5",
-    "@nestjs/platform-express": "^11.1.10",
-    "@nestjs/schematics": "11.0.9",
-    "@nestjs/testing": "^11.1.10",
+    "@nestjs/cli": "^12.0.0",
+    "@nestjs/common": "^12.0.0",
+    "@nestjs/core": "^12.0.0",
+    "@nestjs/passport": "^12.0.0",
+    "@nestjs/platform-express": "^12.0.0",
+    "@nestjs/schematics": "^12.0.0",
+    "@nestjs/testing": "^12.0.0",
     "@types/express": "^5.0.6",
     "@types/jest": "^30.0.0",
     "@types/node": "^25.0.3",
     "@types/passport-jwt": "^4.0.1",
     "@types/supertest": "^6.0.3",
-    "@typescript-eslint/eslint-plugin": "^8.50.1",
-    "@typescript-eslint/parser": "^8.50.1",
+    "@typescript-eslint/eslint-plugin": "^8.74.0",
+    "@typescript-eslint/parser": "^8.74.0",
     "eslint": "^9.39.1",
     "eslint-config-prettier": "10.1.8",
     "eslint-plugin-prettier": "^5.5.4",
@@ -78,7 +81,7 @@
     "ts-loader": "^9.5.4",
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
-    "typescript": "^5.9.3"
+    "typescript": "^6.0.0"
   },
   "bugs": {
     "url": "https://github.com/hasilt/nestjs-passport-firebase/issues"
