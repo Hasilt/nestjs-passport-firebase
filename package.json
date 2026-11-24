@@ -31,7 +31,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/hasilt/nestjs-passport-firebase.git"
+    "url": "https://github.com/Hasilt/nestjs-passport-firebase"
   },
   "engines": {
     "node": ">=18"
@@ -84,7 +84,7 @@
     "typescript": "^6.0.0"
   },
   "bugs": {
-    "url": "https://github.com/hasilt/nestjs-passport-firebase/issues"
+    "url": "https://github.com/Hasilt/nestjs-passport-firebase/issues"
   },
-  "homepage": "https://github.com/hasilt/nestjs-passport-firebase#readme"
+  "homepage": "https://github.com/Hasilt/nestjs-passport-firebase#readme"
 }
