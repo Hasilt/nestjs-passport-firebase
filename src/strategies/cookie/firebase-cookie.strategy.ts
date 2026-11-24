@@ -1,13 +1,14 @@
 import { Strategy } from 'passport-custom';
 import { PassportStrategy } from '@nestjs/passport';
 import { Injectable, Inject, UnauthorizedException } from '@nestjs/common';
+import { App, cert, getApp, getApps, initializeApp } from 'firebase-admin/app';
+import { getAuth } from 'firebase-admin/auth';
 import { FIREBASE_AUTH_CONFIG } from '../../constants';
 import { FirebaseAuthConfig } from '../../firebase-auth.config';
-import * as admin from 'firebase-admin';
 
 @Injectable()
 export class FirebaseCookieStrategy extends PassportStrategy(Strategy, 'firebase-cookie') {
-    private firebaseAdmin!: admin.app.App;
+    private firebaseAdmin!: App;
 
     constructor(
         @Inject(FIREBASE_AUTH_CONFIG) private config: FirebaseAuthConfig
@@ -17,15 +18,15 @@ export class FirebaseCookieStrategy extends PassportStrategy(Strategy, 'firebase
     }
 
     private initializeFirebaseAdmin() {
-        if (!admin.apps.length) {
+        if (!getApps().length) {
             if (!this.config.serviceAccountPath) {
                 throw new Error('FirebaseAuthConfig.serviceAccountPath is required for cookie auth');
             }
-            this.firebaseAdmin = admin.initializeApp({
-                credential: admin.credential.cert(this.config.serviceAccountPath),
+            this.firebaseAdmin = initializeApp({
+                credential: cert(this.config.serviceAccountPath),
             });
         } else {
-            this.firebaseAdmin = admin.app();
+            this.firebaseAdmin = getApp();
         }
     }
 
@@ -37,7 +38,7 @@ export class FirebaseCookieStrategy extends PassportStrategy(Strategy, 'firebase
         }
 
         try {
-            const decodedClaims = await admin.auth().verifySessionCookie(
+            const decodedClaims = await getAuth(this.firebaseAdmin).verifySessionCookie(
                 sessionCookie,
                 true
             );
