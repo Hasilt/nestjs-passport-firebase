@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.0.19] - 2026-11-24
+
+- Extended `firebase-admin` peer range to include `^14.x` (keeps 12–13)
+- Migrated cookie strategy to modular `firebase-admin/app` and `firebase-admin/auth` APIs for Admin SDK 14 TypeScript compatibility
+
+## [1.0.18] - 2026-11-24
+
+- Fixed Nest logo URL in README for npm rendering
+
 ## [1.0.17] - 2026-11-24
 
 - Added NestJS 12 peer and development dependency support (Nest 8–11 still supported)

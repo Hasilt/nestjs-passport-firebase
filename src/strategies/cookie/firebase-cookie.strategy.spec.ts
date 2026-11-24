@@ -1,25 +1,19 @@
 import { UnauthorizedException } from '@nestjs/common';
-import * as admin from 'firebase-admin';
+import { cert, getApp, getApps, initializeApp } from 'firebase-admin/app';
+import { getAuth } from 'firebase-admin/auth';
 import { FirebaseCookieStrategy } from './firebase-cookie.strategy';
 import { FirebaseAuthConfig } from '../../firebase-auth.config';
 
-jest.mock('firebase-admin', () => {
-    const verifySessionCookieMock = jest.fn();
-    const authMock = jest.fn(() => ({
-        verifySessionCookie: verifySessionCookieMock,
-    }));
+jest.mock('firebase-admin/app', () => ({
+    initializeApp: jest.fn(() => ({ name: 'mockApp' })),
+    getApp: jest.fn(() => ({ name: 'mockApp' })),
+    getApps: jest.fn(() => []),
+    cert: jest.fn((path: string) => ({ path })),
+}));
 
-    return {
-        __esModule: true,
-        apps: [],
-        initializeApp: jest.fn(() => ({ name: 'mockApp' })),
-        app: jest.fn(() => ({ name: 'mockApp' })),
-        auth: authMock,
-        credential: {
-            cert: jest.fn(),
-        },
-    };
-});
+jest.mock('firebase-admin/auth', () => ({
+    getAuth: jest.fn(),
+}));
 
 describe('FirebaseCookieStrategy', () => {
     let strategy: FirebaseCookieStrategy;
@@ -34,26 +28,31 @@ describe('FirebaseCookieStrategy', () => {
             serviceAccountPath: '/path/to/serviceAccount.json',
         };
 
-        // Reset admin mocks
-        (admin.apps as any).length = 0;
+        verifySessionCookieMock = jest.fn();
+        (getApps as jest.Mock).mockReturnValue([]);
+        (getAuth as jest.Mock).mockReturnValue({
+            verifySessionCookie: verifySessionCookieMock,
+        });
         jest.clearAllMocks();
+        (getApps as jest.Mock).mockReturnValue([]);
+        (getAuth as jest.Mock).mockReturnValue({
+            verifySessionCookie: verifySessionCookieMock,
+        });
 
         strategy = new FirebaseCookieStrategy(config as any);
-
-        // Capture mock reference for easy use
-        verifySessionCookieMock = (admin.auth() as any).verifySessionCookie;
     });
 
     it('should initialize Firebase Admin if not already initialized', () => {
-        expect(admin.initializeApp).toHaveBeenCalledWith({
-            credential: admin.credential.cert(config.serviceAccountPath!),
+        expect(cert).toHaveBeenCalledWith(config.serviceAccountPath);
+        expect(initializeApp).toHaveBeenCalledWith({
+            credential: expect.anything(),
         });
     });
 
     it('should use existing Firebase app if already initialized', () => {
-        (admin.apps as any).length = 1;
+        (getApps as jest.Mock).mockReturnValue([{}]);
         new FirebaseCookieStrategy(config as any);
-        expect(admin.app).toHaveBeenCalled();
+        expect(getApp).toHaveBeenCalled();
     });
 
     it('should throw UnauthorizedException if no cookie found', async () => {
