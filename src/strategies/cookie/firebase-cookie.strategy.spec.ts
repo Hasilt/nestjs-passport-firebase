@@ -1,7 +1,7 @@
 import { UnauthorizedException } from '@nestjs/common';
 import * as admin from 'firebase-admin';
 import { FirebaseCookieStrategy } from './firebase-cookie.strategy';
-import { FirebaseAuthConfig } from 'src/firebase-auth.config';
+import { FirebaseAuthConfig } from '../../firebase-auth.config';
 
 jest.mock('firebase-admin', () => {
     const verifySessionCookieMock = jest.fn();
@@ -46,7 +46,7 @@ describe('FirebaseCookieStrategy', () => {
 
     it('should initialize Firebase Admin if not already initialized', () => {
         expect(admin.initializeApp).toHaveBeenCalledWith({
-            credential: admin.credential.cert(config.serviceAccountPath),
+            credential: admin.credential.cert(config.serviceAccountPath!),
         });
     });
 

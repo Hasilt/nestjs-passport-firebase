@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.17] - 2026-11-24
+
+- Added NestJS 12 peer and development dependency support (Nest 8–11 still supported)
+- Bumped TypeScript to 6.x for Nest 12 tooling compatibility
+- Documented Node.js 20.19+ / 22.12+ requirement when using Nest 12 / `@nestjs/passport@12`
+- Adjusted Jest to load Nest 12 ESM packages via `--experimental-vm-modules`
+
 ## [1.0.10] - 2024-09-11
 
 - Updated package to support NestJS 11
